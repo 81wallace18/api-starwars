@@ -1,11 +1,16 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
 app.use(express.json());
-const port = 3000;
+const port = process.env.PORT;
 
-mongoose.connect('mongodb+srv://kvilhena:BXeMiNNf3GxMjxwy@starwars.ocgj3tj.mongodb.net/?retryWrites=true&w=majority&appName=starwars');
+const mongoUri = process.env.MONGODB_URI ;
+
+mongoose.connect(mongoUri)
+  .then(() => console.log('Conectado ao MongoDB com sucesso!'))
+  .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
 
 const Film = mongoose.model('Film', {
